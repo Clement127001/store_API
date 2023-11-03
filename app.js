@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 
+const connectDB = require("./db/connect");
 const notFound = require("./middleware/not-found");
 const errorHandlingMiddleware = require("./middleware/error-handler");
 
@@ -19,7 +20,7 @@ app.get("/", (req, res) => {
 });
 
 //products route
-app.use("/api/v1/products");
+// app.use("/api/v1/products");
 
 //post-route middlewares
 app.use(notFound);
@@ -32,8 +33,12 @@ const port = process.env.PORT || 3000;
 const start = async () => {
   try {
     //connectDB
+    await connectDB(process.env.MONGO_URI);
+    console.log("Database is connected");
     app.listen(port, console.log(`server is listening on port ${port}`));
   } catch (error) {
     console.log(error);
   }
 };
+
+start();
