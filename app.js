@@ -7,6 +7,8 @@ const connectDB = require("./db/connect");
 const notFound = require("./middleware/not-found");
 const errorHandlingMiddleware = require("./middleware/error-handler");
 
+const { router: productsRouter } = require("./routes/products");
+
 //pre-route middlewares
 app.use(express.json());
 
@@ -20,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 //products route
-// app.use("/api/v1/products");
+app.use("/api/v1/products", productsRouter);
 
 //post-route middlewares
 app.use(notFound);
